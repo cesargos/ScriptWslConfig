@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# sudo bash wslconfig.sh => para rodar
+# sudo chmod -R 755 wslconfig.sh => para permitir a execução caso vc não tenha
+
+echo "Em caso de erro informando que '\\r' não é comando. Execute o seguinte comando:"
+echo "sed -i 's/\\r//g' wslconfig.sh"
+sleep 1
 cd /etc
 
 if [ $? -ne 0 ]
@@ -527,12 +533,19 @@ then
     echo "Aperte ENTER para continuar"
     read
     echo ""
-    echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'"
+    echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
     echo ""
     sleep 3
     echo $chavessh
 
   fi
+else
+  echo ""
+  echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
+  echo ""
+  sleep 3
+  echo $chavessh
+  
 fi
 
 sleep 5
