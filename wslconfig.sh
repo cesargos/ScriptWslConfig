@@ -113,7 +113,8 @@ else
   date >> logPcConfg.txt
   echo "##### ZSH foi confgurado como padrão #####" >> logPcConfg.txt
 
-  s
+  sleep 1
+fi
 
 
 echo ""
