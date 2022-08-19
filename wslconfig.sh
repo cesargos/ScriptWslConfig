@@ -79,48 +79,7 @@ else
 
   sleep 1
 fi
-echo ""
-echo "############## INSTALANDO O ZSH #######################"
-echo "" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo "############## INSTALANDO O ZSH #######################" >> logPcConfg.txt
 
-sleep 1
-echo ""
-isThereTheProgram=$(zsh --version)
-if [ $? -ne 0 ]
-then
-    echo "##### Instalando #####"
-    echo "" >> logPcConfg.txt
-    date >> logPcConfg.txt
-    echo "##### Instalando #####" >> logPcConfg.txt
-
-    apt install zsh
-else
-  echo "##### ZSH já está instalado #####"
-  echo "" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo "##### ZSH já está instalado #####" >> logPcConfg.txt
-
-  sleep 1
-fi
-
-chsh -s $(which zsh)
-if [ $? -ne 0 ]
-then
-    echo "##### Erro ao configurar o ZSH como padrão #####"
-    echo "" >> logPcConfg.txt
-    date >> logPcConfg.txt
-    echo "##### Erro ao configurar o ZSH como padrão #####" >> logPcConfg.txt
-
-else
-  echo "##### ZSH foi confgurado como padrão #####"
-  echo "" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo "##### ZSH foi confgurado como padrão #####" >> logPcConfg.txt
-
-  sleep 1
-fi
 
 
 echo ""
@@ -144,41 +103,6 @@ else
   sleep 1
 fi
 
-echo ""
-echo "############## INSTALANDO O OH-MY-ZSH #######################"
-echo "" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo "############## INSTALANDO O OH-MY-ZSH #######################" >> logPcConfg.txt
-
-sleep 1
-echo ""
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-if [ $? -ne 0 ]
-then
-  "Não foi possível instalar o OH-MY-ZSH"
-  echo "" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo "############## Não foi possível instalar o OH-MY-ZSH #######################" >> logPcConfg.txt
-
-  sleep 2
-else
-  echo "ATENÇÃO: Vc vai instalar depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>"
-  echo "Aperte enter para continuar"
-  read
-  echo ""
-  echo "############## INSTALANDO O THEMA DRACULA NO ZSH #######################"
-  echo "" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo "############## INSTALANDO O THEMA DRACULA NO ZSH #######################" >> logPcConfg.txt
-
-  sleep 1
-  echo ""
-  git clone https://github.com/dracula/zsh.git
-  ln -s ~/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
-
-  sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME="dracula"/g' ~/.zshrc
-
-fi
 
 echo ""
 echo "############## INSTALANDO O NVM (NODE VERSION MANAGER) #######################"
@@ -460,99 +384,236 @@ else
 	sleep 1
 fi
 
-
-echo ""
-echo "############## CONFIGURANDO O GIT #######################"
+echo "############## INSTALANDO O ZSH #######################"
 echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
-echo "############## CONFIGURANDO O GIT #######################" >> logPcConfg.txt
+echo "############## INSTALANDO O ZSH #######################" >> logPcConfg.txt
 
 sleep 1
 echo ""
-regex="^\w.+@\w.*\.\w"
-echo -n "Digite o seu email do github: "
+isThereTheProgram=$(zsh --version)
+if [ $? -ne 0 ]
+then
+    echo "ATENÇÃO: Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>"
+    echo "Aperte enter para continuar"
+    read
+    echo "##### Instalando #####"
+    echo "" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo "##### Instalando #####" >> logPcConfg.txt
+
+    apt install zsh
+else
+  echo "##### ZSH já está instalado #####"
+  echo "" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo "##### ZSH já está instalado #####" >> logPcConfg.txt
+
+  sleep 1
+fi
+
+chsh -s $(which zsh)
+if [ $? -ne 0 ]
+then
+    echo "##### Erro ao configurar o ZSH como padrão #####"
+    echo "" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo "##### Erro ao configurar o ZSH como padrão #####" >> logPcConfg.txt
+
+else
+  echo "##### ZSH foi confgurado como padrão #####"
+  echo "" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo "##### ZSH foi confgurado como padrão #####" >> logPcConfg.txt
+
+  sleep 1
+fi
+
+echo "echo \"\"
+echo \"############## INSTALANDO O ZSH #######################\"
+echo \"\" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo \"############## INSTALANDO O ZSH #######################\" >> logPcConfg.txt
+
+sleep 1
+echo \"\"
+isThereTheProgram=\$(zsh --version)
+if [ \$? -ne 0 ]
+then
+    echo \"ATENÇÃO: Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>\"
+    echo \"Aperte enter para continuar\"
+    read
+    echo \"##### Instalando #####\"
+    echo \"\" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo \"##### Instalando #####\" >> logPcConfg.txt
+
+    apt install zsh
+else
+  echo \"##### ZSH já está instalado #####\"
+  echo \"\" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo \"##### ZSH já está instalado #####\" >> logPcConfg.txt
+
+  sleep 1
+fi
+
+chsh -s \$(which zsh)
+if [ \$? -ne 0 ]
+then
+    echo \"##### Erro ao configurar o ZSH como padrão #####\"
+    echo \"\" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo \"##### Erro ao configurar o ZSH como padrão #####\" >> logPcConfg.txt
+
+else
+  echo \"##### ZSH foi confgurado como padrão #####\"
+  echo \"\" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo \"##### ZSH foi confgurado como padrão #####\" >> logPcConfg.txt
+
+  sleep 1
+fi
+
+
+echo \"\"
+echo \"############## INSTALANDO O OH-MY-ZSH #######################\"
+echo \"\" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo \"############## INSTALANDO O OH-MY-ZSH #######################\" >> logPcConfg.txt
+
+sleep 1
+echo \"\"
+sh -c \"\$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\"
+if [ \$? -ne 0 ]
+then
+  \"Não foi possível instalar o OH-MY-ZSH\"
+  echo \"\" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo \"############## Não foi possível instalar o OH-MY-ZSH #######################\" >> logPcConfg.txt
+
+  sleep 2
+else
+ 
+  echo \"\"
+  echo \"############## INSTALANDO O THEMA DRACULA NO ZSH #######################\"
+  echo \"\" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo \"############## INSTALANDO O THEMA DRACULA NO ZSH #######################\" >> logPcConfg.txt
+
+  sleep 1
+  echo \"\"
+  git clone https://github.com/dracula/zsh.git
+  ln -s ~/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+
+  sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' ~/.zshrc
+
+fi
+
+
+
+
+echo \"\"
+echo \"############## CONFIGURANDO O GIT #######################\"
+echo \"\" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo \"############## CONFIGURANDO O GIT #######################\" >> logPcConfg.txt
+
+sleep 1
+echo \"\"
+regex=\"^\w.+@\w.*\.\w\"
+echo -n \"Digite o seu email do github: \"
 read email
-while [[ ! $email =~ $regex ]]
+while [[ ! \$email =~ \$regex ]]
 do
-    echo -n "Digite um email válido: "
+    echo -n \"Digite um email válido: \"
     read email
 done
-echo ""
-regex="\w{2,}"
-echo -n "Digite o seu username do github: "
+echo \"\"
+regex=\"\w{2,}\"
+echo -n \"Digite o seu username do github: \"
 read username
-while [[ ! $username =~ $regex ]]
+while [[ ! \$username =~ \$regex ]]
 do
-    echo -n "Digite um username válido: "
+    echo -n \"Digite um username válido: \"
     read username
 done
  
-git config --global user.email "$email"
-git config --global user.name "$username"
+git config --global user.email \"\$email\"
+git config --global user.name \"\$username\"
 
-echo "############## GERANDO CHAVE SSH #######################"
-echo "" >> logPcConfg.txt
+echo \"############## GERANDO CHAVE SSH #######################\"
+echo \"\" >> logPcConfg.txt
 date >> logPcConfg.txt
-echo "############## GERANDO CHAVE SSH #######################" >> logPcConfg.txt
-echo ""
+echo \"############## GERANDO CHAVE SSH #######################\" >> logPcConfg.txt
+echo \"\"
 sleep 2
-echo "A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas. Passo 15"
+echo \"A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas. Passo 15\"
 
-ssh-keygen -t rsa -b 4096 -C "$email"
-echo "A seguir configure o seu github. "
-echo "Copie e cole a chave ssh a seguir no seu github"
-echo ""
+ssh-keygen -t rsa -b 4096 -C \"\$email\"
+echo \"A seguir configure o seu github. \"
+echo \"Copie e cole a chave ssh a seguir no seu github\"
+echo \"\"
 sleep 2
 cat ~/.ssh/id_rsa.pub
-if [ $? -ne 0 ]
+if [ \$? -ne 0 ]
 then 
   sleep 2
-  echo "#### Aparentemente a chave ssh não foi gerada na sua home ####"
-  echo "" >> logPcConfg.txt
+  echo \"#### Aparentemente a chave ssh não foi gerada na sua home ####\"
+  echo \"\" >> logPcConfg.txt
   date >> logPcConfg.txt
-  echo "#### Aparentemente a chave ssh não foi gerada na sua home ####" >> logPcConfg.txt
+  echo \"#### Aparentemente a chave ssh não foi gerada na sua home ####\" >> logPcConfg.txt
 
   sleep 1
-  chavessh=$(cat /root/.ssh/id_rsa.pub)
-  if [ $? -ne 0 ]
+  chavessh=\$(cat /root/.ssh/id_rsa.pub)
+  if [ \$? -ne 0 ]
   then 
-    echo "#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####"
-    echo "" >> logPcConfg.txt
+    echo \"#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####\"
+    echo \"\" >> logPcConfg.txt
     date >> logPcConfg.txt
-    echo "#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####" >> logPcConfg.txt
+    echo \"#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####\" >> logPcConfg.txt
 
   else
-    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###"
-    echo "" >> logPcConfg.txt
+    echo \"### Sua chave foi gerada na root. Isso pode causar algum problema. ###\"
+    echo \"\" >> logPcConfg.txt
     date >> logPcConfg.txt
-    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###" >> logPcConfg.txt
+    echo \"### Sua chave foi gerada na root. Isso pode causar algum problema. ###\" >> logPcConfg.txt
 
     sleep 1
-    echo "Verifique o passo 15 em caso de erro"
+    echo \"Verifique o passo 15 em caso de erro\"
     sleep 2
-    echo "Aperte ENTER para continuar"
+    echo \"Aperte ENTER para continuar\"
     read
-    echo ""
-    echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
-    echo ""
+    echo \"\"
+    echo \"Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado\"
+    echo \"\"
     sleep 3
-    echo $chavessh
+    echo \$chavessh
 
   fi
 else
-  echo ""
-  echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
-  echo ""
+  echo \"\"
+  echo \"Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado\"
+  echo \"\"
   sleep 3
-  echo $chavessh
+  echo \$chavessh
   
 fi
 
 sleep 5
 
+echo \"\"
+echo \"\"
+echo \"############## SCRIPT FINALIZADO #######################\"
+echo \"\" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo \"############## SCRIPT FINALIZADO #######################\" >> logPcConfg.txt" > zshconfig.sh
+
 echo ""
 echo ""
-echo "############## SCRIPT FINALIZADO #######################"
+echo "############## SCRIPT DO WSL FINALIZADO #######################"
+echo "############## AGHORA RODE: bash zshconfig.sh PARA CONFIGURAR O ZSH (NÃO USAR O SUDO) #######################"
+
 echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo "############## SCRIPT FINALIZADO #######################" >> logPcConfg.txt
