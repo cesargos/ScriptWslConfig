@@ -184,37 +184,37 @@ else
 	sleep 1
 fi
 
-echo ""
-echo "############## INSTALANDO O SERVERLESS #######################"
-echo "" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo "############## INSTALANDO O SERVERLESS #######################" >> logPcConfg.txt
+# echo ""
+# echo "############## INSTALANDO O SERVERLESS #######################"
+# echo "" >> logPcConfg.txt
+# date >> logPcConfg.txt
+# echo "############## INSTALANDO O SERVERLESS #######################" >> logPcConfg.txt
 
-sleep 1
-echo ""
+# sleep 1
+# echo ""
 
-isThereTheProgram=$(sls --version)
-if [ $? -ne 0 ]
-then
-  npm i -g serverless@2.25.2
-	if [ $? -ne 0 ]
-	then 
-  		echo "### não foi possivel instalar o SERVERLESS Continue na sessao 12 ###"
-  		echo "" >> logPcConfg.txt
-  		date >> logPcConfg.txt
-  		echo "### não foi possivel instalar o SERVERLESS Continue na sessao 12 ###" >> logPcConfg.txt
+# isThereTheProgram=$(sls --version)
+# if [ $? -ne 0 ]
+# then
+#   npm i -g serverless@2.25.2
+# 	if [ $? -ne 0 ]
+# 	then 
+#   		echo "### não foi possivel instalar o SERVERLESS Continue na sessao 12 ###"
+#   		echo "" >> logPcConfg.txt
+#   		date >> logPcConfg.txt
+#   		echo "### não foi possivel instalar o SERVERLESS Continue na sessao 12 ###" >> logPcConfg.txt
 
-  		sleep 2
-  		# exit 0
-	fi
-else
-	echo "##### SERVERLESS já está instalado #####"
-	echo "" >> logPcConfg.txt
-	date >> logPcConfg.txt
-	echo "##### SERVERLESS já está instalado #####" >> logPcConfg.txt
+#   		sleep 2
+#   		# exit 0
+# 	fi
+# else
+# 	echo "##### SERVERLESS já está instalado #####"
+# 	echo "" >> logPcConfg.txt
+# 	date >> logPcConfg.txt
+# 	echo "##### SERVERLESS já está instalado #####" >> logPcConfg.txt
 
-	sleep 1
-fi
+# 	sleep 1
+# fi
 
 
 
@@ -639,7 +639,8 @@ else
   sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' ~/.zshrc
 
 fi
-echo \" Script finalizado agora reinicie o prompt\"
+echo \" Script finalizado agora reinicie o prompt e depois instale o serverless com o comando:\"
+echo \" npm i -g serverless@2.25.2 \"
 
 " > zshconfig.sh
 sleep 5
@@ -650,4 +651,4 @@ echo "############## SCRIPT FINALIZADO #######################"
 echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo "############## SCRIPT FINALIZADO #######################" 
-echo "APÓS INSERIR SUA SSH NO GIT, EXECUTE O COMANDO bash zshconfig.sh (sem o sudo) para configurar o ZSH"
+echo "AGORA EXECUTE O COMANDO zshconfig.sh (sem o sudo)"
