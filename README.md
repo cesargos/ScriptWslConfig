@@ -28,7 +28,7 @@ Aplica automaticamente as configurações desse arquivo: https://cesargos.notion
 
 
 # Configure o WSL usando o CURL com o seguinte comando
-Copie, cole e aperte enter no seguinte comando no terminal do Ubunto:
+Copie, cole e aperte enter no seguinte comando no terminal do Ubuntu:
 ```
 curl https://raw.githubusercontent.com/cesargos/ScriptWslConfig/main/wslconfig.sh > wslconfig.sh
 sed -i 's/\r//g' wslconfig.sh
@@ -37,7 +37,7 @@ sudo bash wslconfig.sh $USER
 Depois siga as instruções apresentadas no terminal.
 
 ## Caso não esteja com internet configurada no WSL
-Copie, cole e aperte enter no seguinte comando no terminal do Ubunto:
+Copie, cole e aperte enter no seguinte comando no terminal do Ubuntu:
 ```
 sudo echo "nameserver 8.8.8.8" > /etc/resolv.conf
 curl https://raw.githubusercontent.com/cesargos/ScriptWslConfig/main/wslconfig.sh > wslconfig.sh
