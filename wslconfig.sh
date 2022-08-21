@@ -661,3 +661,4 @@ echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo "############## SCRIPT FINALIZADO #######################" 
 echo "AGORA EXECUTE O COMANDO zshconfig.sh (sem o sudo)"
+ 
