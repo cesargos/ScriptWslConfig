@@ -473,20 +473,20 @@ echo "############## CONFIGURANDO O GIT #######################" >> logPcConfg.t
 sleep 1
 echo ""
 regex="^\w.+@\w.*\.\w"
-echo -n "Digite o seu email do github: "
+echo -n "${FMT_BOLD}Digite o seu email do github: ${FMT_RESET}"
 read email
 while [[ ! $email =~ $regex ]]
 do
-    echo -n "Digite um email válido: "
+    echo -n "${FMT_BOLD}Digite um email válido: ${FMT_RESET}"
     read email
 done
 echo ""
 regex="\w{2,}"
-echo -n "Digite o seu username do github: "
+echo -n "${FMT_BOLD}Digite o seu username do github:${FMT_RESET} "
 read username
 while [[ ! $username =~ $regex ]]
 do
-    echo -n "Digite um username válido: "
+    echo -n "${FMT_BOLD}Digite um username válido:${FMT_RESET} "
     read username
 done
  
@@ -525,10 +525,10 @@ then
     echo "#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####" >> logPcConfg.txt
 
   else
-    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###"
+    echo "### Sua chave foi gerada na root. ###"
     echo "" >> logPcConfg.txt
     date >> logPcConfg.txt
-    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###" >> logPcConfg.txt
+    echo "### Sua chave foi gerada na root. ###" >> logPcConfg.txt
 
     sleep 1
     echo "Verifique o passo 15 em caso de erro"
@@ -536,7 +536,7 @@ then
     echo "Aperte ENTER para continuar"
     read
     echo ""
-    echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
+    echo "${FMT_YELLOW}Copie e cole a chave ssh a seguir no seu github. ${FMT_BOLD}Começando pelo 'ssh' ate o '.com(.br)'${FMT_RESET}${FMT_YELLOW}. Depois rode o comando '${FMT_BOLD}ssh -T git@github.com${FMT_RESET}${FMT_YELLOW}' para verificar se o seu github esta sincronizado${FMT_RESET}"
     echo ""
     sleep 3
     echo $chavessh
@@ -544,10 +544,10 @@ then
   fi
 else
   echo ""
-  echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
+  echo "${FMT_YELLOW}Copie e cole a chave ssh a seguir no seu github. ${FMT_BOLD}Começando pelo 'ssh' ate o '.com(.br)'${FMT_RESET}${FMT_YELLOW}. Depois rode o comando '${FMT_BOLD}ssh -T git@github.com${FMT_RESET}${FMT_YELLOW}' para verificar se o seu github esta sincronizado${FMT_RESET}"
   echo ""
   sleep 3
-  echo $chavessh
+  echo "${FMT_BOLD} $chavessh ${FMT_RESET}"
   
 fi
 
@@ -648,8 +648,8 @@ else
   sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' ~/.zshrc
 
 fi
-echo \" Script finalizado agora reinicie o prompt e depois instale o serverless com o comando:\"
-echo \" npm i -g serverless@2.25.2 \"
+echo \" \$(printf '\033[33m')Script finalizado agora reinicie o terminal e depois instale o serverless com o comando:\"
+echo \" \$(printf '\033[1m')npm i -g serverless@2.25.2 \$(printf '\033[0m')\"
 
 " > zshconfig.sh
 sleep 5
@@ -660,5 +660,5 @@ echo "############## SCRIPT FINALIZADO #######################"
 echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo "############## SCRIPT FINALIZADO #######################" 
-echo "AGORA EXECUTE O COMANDO zshconfig.sh (sem o sudo)"
+echo "${FMT_YELLOW}AGORA EXECUTE O COMANDO ${FMT_BOLD}bash zshconfig.sh ${FMT_RESET}${FMT_YELLOW}(sem o sudo) ${FMT_RESET}"
  
