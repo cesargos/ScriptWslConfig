@@ -3,13 +3,22 @@
 # sudo bash wslconfig.sh => para rodar
 # sudo chmod -R 755 wslconfig.sh => para permitir a execução caso vc não tenha
 
-echo "Em caso de erro informando que '\\r' não é comando. Execute o seguinte comando:"
-echo "sed -i 's/\\r//g' wslconfig.sh"
+FMT_RED=$(printf '\033[31m')
+FMT_GREEN=$(printf '\033[32m')
+FMT_YELLOW=$(printf '\033[33m')
+FMT_BLUE=$(printf '\033[34m')
+FMT_BOLD=$(printf '\033[1m')
+FMT_RESET=$(printf '\033[0m')
+# Exemplo de uso:  echo "${FMT_BLUE}seu texto colorido aqui...${FMT_RESET} seu texto normal aqui"
+
+
+echo "${FMT_YELLOW}ATENÇÃO: Em caso de erro informando que '\\r' não é comando. Execute o seguinte comando:"
+echo "sed -i 's/\\r//g' wslconfig.sh${FMT_RESET}"
 echo "Seu usuário é $USER"
 echo "O  Usuário passado via parametro é $1"
 if [ -z $1 ]
 then
-  echo "Execute o comando passando \$USER no final. Ex: sudo bash wslconfig.sh \$USER"
+  echo "${FMT_YELLOW}Execute o comando passando \$USER no final. Ex: ${FMT_BOLD}sudo bash wslconfig.sh \$USER${FMT_RESET}"
   exit 0
 fi
 
@@ -35,12 +44,12 @@ generateResolvConf = false" > /etc/wsl.conf
 
 if [ $? -ne 0 ]
 then 
-  echo "##### Execute esse Script com sudo ####"
+  echo "${FMT_RED}##### Execute esse Script com sudo ####${FMT_RESET}"
   echo "" >> logPcConfg.txt
   date >> logPcConfg.txt
   echo "##### Execute esse Script com sudo ####" >> logPcConfg.txt
 
-  echo "Caso o Script não tenha permissão para executar. Conceda com 'sudo chmod +x pcconfig.sh'"
+  echo "Caso o Script não tenha permissão para executar. Conceda com '${FMT_GREEN}sudo chmod +x pcconfig.sh${FMT_RESET}'"
   sleep 2
   exit 0
 fi
@@ -322,8 +331,8 @@ fi
 
 echo ""
 echo ""
-echo "Use 'sudo service docker start' para iniciar o docker e 'sudo service docker stop' para finalizar o docker"
-echo "Aperte Enter para continuar"
+echo "${FMT_YELLOW}Use '${FMT_BOLD}sudo service docker start${FMT_RESET}${FMT_YELLOW}' para iniciar o docker e '${FMT_BOLD}sudo service docker stop${FMT_RESET}${FMT_YELLOW}' para finalizar o docker${FMT_RESET}"
+echo "${FMT_GREEN}Aperte Enter para continuar${FMT_RESET}"
 read
 
 echo ""
@@ -409,8 +418,8 @@ echo ""
 isThereTheProgram=$(zsh --version)
 if [ $? -ne 0 ]
 then
-    echo "ATENÇÃO: Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>"
-    echo "Aperte enter para continuar"
+    echo "${FMT_BOLD}ATENÇÃO: ${FMT_GREEN}Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>${FMT_RESET}"
+    echo "${FMT_GREEN}Aperte enter para continuar${FMT_RESET}"
     read
     echo "##### Instalando #####"
     echo "" >> logPcConfg.txt
@@ -490,7 +499,7 @@ date >> logPcConfg.txt
 echo "############## GERANDO CHAVE SSH #######################" >> logPcConfg.txt
 echo ""
 sleep 2
-echo "A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas. Passo 15"
+echo "${FMT_YELLOW}${FMT_BOLD}A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas.${FMT_RESET} Passo 15"
 
 ssh-keygen -t rsa -b 4096 -C "$email"
 echo "A seguir configure o seu github. "
