@@ -5,20 +5,28 @@
 
 echo "Em caso de erro informando que '\\r' não é comando. Execute o seguinte comando:"
 echo "sed -i 's/\\r//g' wslconfig.sh"
-sleep 1
-cd /etc
-
-if [ $? -ne 0 ]
-then 
-  echo "##### Execute esse Script com sudo ####"
-  echo "" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo "##### Execute esse Script com sudo ####" >> logPcConfg.txt
-
-  echo "Caso o Script não tenha permissão para executar. Conceda com 'sudo chmod +x pcconfig.sh'"
-  sleep 2
+echo "Seu usuário é $USER"
+echo "O  Usuário passado via parametro é $1"
+if [ -z $1 ]
+then
+  echo "Execute o comando passando \$USER no final. Ex: sudo bash wslconfig.sh \$USER"
   exit 0
 fi
+
+sleep 1
+# cd /etc
+
+# if [ $? -ne 0 ]
+# then 
+#   echo "##### Execute esse Script com sudo ####"
+#   echo "" >> logPcConfg.txt
+#   date >> logPcConfg.txt
+#   echo "##### Execute esse Script com sudo ####" >> logPcConfg.txt
+
+#   echo "Caso o Script não tenha permissão para executar. Conceda com 'sudo chmod +x pcconfig.sh'"
+#   sleep 2
+#   exit 0
+# fi
 
 echo "[boot]
 command=\"echo 'nameserver 8.8.8.8' > /etc/resolv.conf\"
@@ -56,6 +64,7 @@ date >> logPcConfg.txt
 echo "############## FEITO UPGRADE #######################" >> logPcConfg.txt
 
 echo ""
+echo "Seu usuário é $USER"
 sleep 1
 
 cd ~
@@ -122,7 +131,7 @@ then
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 	if [ $? -ne 0 ]
-	then 
+	then  
   		echo "### não foi possivel instalar o NVM Continue na sessao 10 ###"
   		echo "" >> logPcConfg.txt
   		date >> logPcConfg.txt
@@ -291,8 +300,14 @@ else
 fi
 
 
+echo ""
+echo "############## DANDO PERMISSÃO DE SUDO DOCKER PARA O USER: $1 #######################"
+echo "" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo "############## DANDO PERMISSÃO DE SUDO DOCKER PARA O USER: $1 #######################" >> logPcConfg.txt
 
-usermod -aG docker $USER
+usermod -aG docker $1
+usermod -aG admin $1
 if [ $? -ne 0 ]
 then 
   echo ""
@@ -415,6 +430,7 @@ fi
 chsh -s $(which zsh)
 if [ $? -ne 0 ]
 then
+    chsh -s $(which zsh)
     echo "##### Erro ao configurar o ZSH como padrão #####"
     echo "" >> logPcConfg.txt
     date >> logPcConfg.txt
@@ -429,8 +445,120 @@ else
   sleep 1
 fi
 
-echo "echo \"\"
-echo \"############## INSTALANDO O ZSH #######################\"
+
+
+
+echo 'export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.zshrc
+
+
+
+
+echo ""
+echo "############## CONFIGURANDO O GIT #######################"
+echo "" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo "############## CONFIGURANDO O GIT #######################" >> logPcConfg.txt
+
+sleep 1
+echo ""
+regex="^\w.+@\w.*\.\w"
+echo -n "Digite o seu email do github: "
+read email
+while [[ ! $email =~ $regex ]]
+do
+    echo -n "Digite um email válido: "
+    read email
+done
+echo ""
+regex="\w{2,}"
+echo -n "Digite o seu username do github: "
+read username
+while [[ ! $username =~ $regex ]]
+do
+    echo -n "Digite um username válido: "
+    read username
+done
+ 
+git config --global user.email "$email"
+git config --global user.name "$username"
+
+echo "############## GERANDO CHAVE SSH #######################"
+echo "" >> logPcConfg.txt
+date >> logPcConfg.txt
+echo "############## GERANDO CHAVE SSH #######################" >> logPcConfg.txt
+echo ""
+sleep 2
+echo "A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas. Passo 15"
+
+ssh-keygen -t rsa -b 4096 -C "$email"
+echo "A seguir configure o seu github. "
+echo "Copie e cole a chave ssh a seguir no seu github"
+echo ""
+sleep 2
+cat ~/.ssh/id_rsa.pub
+if [ $? -ne 0 ]
+then 
+  sleep 2
+  echo "#### Aparentemente a chave ssh não foi gerada na sua home ####"
+  echo "" >> logPcConfg.txt
+  date >> logPcConfg.txt
+  echo "#### Aparentemente a chave ssh não foi gerada na sua home ####" >> logPcConfg.txt
+
+  sleep 1
+  chavessh=$(cat /root/.ssh/id_rsa.pub)
+  if [ $? -ne 0 ]
+  then 
+    echo "#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####"
+    echo "" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo "#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####" >> logPcConfg.txt
+
+  else
+    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###"
+    echo "" >> logPcConfg.txt
+    date >> logPcConfg.txt
+    echo "### Sua chave foi gerada na root. Isso pode causar algum problema. ###" >> logPcConfg.txt
+
+    sleep 1
+    echo "Verifique o passo 15 em caso de erro"
+    sleep 2
+    echo "Aperte ENTER para continuar"
+    read
+    echo ""
+    echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
+    echo ""
+    sleep 3
+    echo $chavessh
+
+  fi
+else
+  echo ""
+  echo "Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado"
+  echo ""
+  sleep 3
+  echo $chavessh
+  
+fi
+
+for content in $( ls -la /root | awk '{ print $9 }' | grep '\w' )
+do
+        if [ -f $content ]
+        then
+                cp /root/$content /home/$1/$content
+                chown $1:$1 /home/$1/$content
+        elif [ -d $content ]
+        then
+                cp /root/$content -r /home/$1/$content
+                chown -hR $1:$1 /home/$1/$content
+        else
+                echo "Não existe: $content"
+        fi
+
+#       cp $content /home/$1/teste
+done
+echo "echo \"############## INSTALANDO O ZSH #######################\"
 echo \"\" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo \"############## INSTALANDO O ZSH #######################\" >> logPcConfg.txt
@@ -461,6 +589,7 @@ fi
 chsh -s \$(which zsh)
 if [ \$? -ne 0 ]
 then
+    chsh -s \$(which zsh)
     echo \"##### Erro ao configurar o ZSH como padrão #####\"
     echo \"\" >> logPcConfg.txt
     date >> logPcConfg.txt
@@ -474,6 +603,7 @@ else
 
   sleep 1
 fi
+
 
 
 echo \"\"
@@ -509,111 +639,15 @@ else
   sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' ~/.zshrc
 
 fi
+echo \" Script finalizado agora reinicie o prompt\"
 
-
-
-
-echo \"\"
-echo \"############## CONFIGURANDO O GIT #######################\"
-echo \"\" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo \"############## CONFIGURANDO O GIT #######################\" >> logPcConfg.txt
-
-sleep 1
-echo \"\"
-regex=\"^\w.+@\w.*\.\w\"
-echo -n \"Digite o seu email do github: \"
-read email
-while [[ ! \$email =~ \$regex ]]
-do
-    echo -n \"Digite um email válido: \"
-    read email
-done
-echo \"\"
-regex=\"\w{2,}\"
-echo -n \"Digite o seu username do github: \"
-read username
-while [[ ! \$username =~ \$regex ]]
-do
-    echo -n \"Digite um username válido: \"
-    read username
-done
- 
-git config --global user.email \"\$email\"
-git config --global user.name \"\$username\"
-
-echo \"############## GERANDO CHAVE SSH #######################\"
-echo \"\" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo \"############## GERANDO CHAVE SSH #######################\" >> logPcConfg.txt
-echo \"\"
-sleep 2
-echo \"A seguir vamos gerar uma chave SSH para vc. Digite enter 3 vezes nas perguntas. Passo 15\"
-
-ssh-keygen -t rsa -b 4096 -C \"\$email\"
-echo \"A seguir configure o seu github. \"
-echo \"Copie e cole a chave ssh a seguir no seu github\"
-echo \"\"
-sleep 2
-cat ~/.ssh/id_rsa.pub
-if [ \$? -ne 0 ]
-then 
-  sleep 2
-  echo \"#### Aparentemente a chave ssh não foi gerada na sua home ####\"
-  echo \"\" >> logPcConfg.txt
-  date >> logPcConfg.txt
-  echo \"#### Aparentemente a chave ssh não foi gerada na sua home ####\" >> logPcConfg.txt
-
-  sleep 1
-  chavessh=\$(cat /root/.ssh/id_rsa.pub)
-  if [ \$? -ne 0 ]
-  then 
-    echo \"#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####\"
-    echo \"\" >> logPcConfg.txt
-    date >> logPcConfg.txt
-    echo \"#### Ela tb não foi gerada na root. Verifique o passo 15 para continuar ####\" >> logPcConfg.txt
-
-  else
-    echo \"### Sua chave foi gerada na root. Isso pode causar algum problema. ###\"
-    echo \"\" >> logPcConfg.txt
-    date >> logPcConfg.txt
-    echo \"### Sua chave foi gerada na root. Isso pode causar algum problema. ###\" >> logPcConfg.txt
-
-    sleep 1
-    echo \"Verifique o passo 15 em caso de erro\"
-    sleep 2
-    echo \"Aperte ENTER para continuar\"
-    read
-    echo \"\"
-    echo \"Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado\"
-    echo \"\"
-    sleep 3
-    echo \$chavessh
-
-  fi
-else
-  echo \"\"
-  echo \"Copie e cole a chave ssh a seguir no seu github. Começando pelo 'ssh' ate o '.com(.br)'. Depois rode o comando 'ssh -T git@github.com' para verificar se o seu github esta sincronizado\"
-  echo \"\"
-  sleep 3
-  echo \$chavessh
-  
-fi
-
+" > zshconfig.sh
 sleep 5
 
-echo \"\"
-echo \"\"
-echo \"############## SCRIPT FINALIZADO #######################\"
-echo \"\" >> logPcConfg.txt
-date >> logPcConfg.txt
-echo \"############## SCRIPT FINALIZADO #######################\" >> logPcConfg.txt" > zshconfig.sh
-
 echo ""
 echo ""
-echo "############## SCRIPT DO WSL FINALIZADO #######################"
-echo "############## AGHORA RODE: bash zshconfig.sh PARA CONFIGURAR O ZSH (NÃO USAR O SUDO) #######################"
-
+echo "############## SCRIPT FINALIZADO #######################"
 echo "" >> logPcConfg.txt
 date >> logPcConfg.txt
-echo "############## SCRIPT FINALIZADO #######################" >> logPcConfg.txt
+echo "############## SCRIPT FINALIZADO #######################" 
+echo "APÓS INSERIR SUA SSH NO GIT, EXECUTE O COMANDO bash zshconfig.sh (sem o sudo) para configurar o ZSH"
