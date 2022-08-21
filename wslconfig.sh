@@ -651,7 +651,8 @@ fi
 echo \" \$(printf '\033[33m')Script finalizado agora reinicie o terminal e depois instale o serverless com o comando:\"
 echo \" \$(printf '\033[1m')npm i -g serverless@2.25.2 \$(printf '\033[0m')\"
 
-" > zshconfig.sh
+" > /home/$1/zshconfig.sh
+chown $1:$1 /home/$1/zshconfig.sh
 sleep 5
 
 echo ""
