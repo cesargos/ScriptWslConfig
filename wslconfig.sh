@@ -425,9 +425,6 @@ echo ""
 isThereTheProgram=$(zsh --version)
 if [ $? -ne 0 ]
 then
-    echo "${FMT_BOLD}ATENÇÃO: ${FMT_GREEN}Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>${FMT_RESET}"
-    echo "${FMT_GREEN}Aperte enter para continuar${FMT_RESET}"
-    read
     echo "##### Instalando #####"
     echo "" >> logPcConfg.txt
     date >> logPcConfg.txt
@@ -460,14 +457,6 @@ else
 
   sleep 1
 fi
-
-
-
-
-echo 'export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> ~/.zshrc
-
 
 
 
@@ -558,6 +547,12 @@ else
   
 fi
 
+echo "export NVM_DIR=\"\$HOME/.nvm\"
+[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm
+[ -s \"\$NVM_DIR/bash_completion\" ] && \\. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion" >> /root/.zshrc
+
+sed -i "1 i export PATH=\$HOME/bin:/usr/local/bin:\$PATH" /root/.zshrc
+
 for content in $( ls -la /root | awk '{ print $9 }' | grep '\w' )
 do
         if [ -f $content ]
@@ -631,6 +626,10 @@ date >> logPcConfg.txt
 echo \"############## INSTALANDO O OH-MY-ZSH #######################\" >> logPcConfg.txt
 
 sleep 1
+echo \"\${FMT_BOLD}ATENÇÃO: \${FMT_GREEN}Vc vai instalar e depois entrar no zsh automaticamente. Caso peça para configurar, escolha a opção 2 e depois digite 'exit' + <ENTER>\${FMT_RESET}\"
+echo \"\${FMT_GREEN}Aperte enter para continuar\${FMT_RESET}\"
+read
+
 echo \"\"
 sh -c \"\$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\"
 if [ \$? -ne 0 ]
@@ -652,9 +651,9 @@ else
   sleep 1
   echo \"\"
   git clone https://github.com/dracula/zsh.git
-  ln -s ~/zsh/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+  ln -s /home/\$USER/zsh/dracula.zsh-theme /home/\$USER/.oh-my-zsh/themes/dracula.zsh-theme
 
-  sed -i 's/\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' ~/.zshrc
+  sed -i 's/\\W*ZSH_THEME=.*/ZSH_THEME=\"dracula\"/g' /home/\$USER/.zshrc
 
 fi
 echo \" \$(printf '\033[33m')Script finalizado agora reinicie o terminal e depois instale o serverless com o comando:\"
