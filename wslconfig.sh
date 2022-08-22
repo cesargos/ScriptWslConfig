@@ -567,7 +567,9 @@ do
 
 #       cp $content /home/$1/teste
 done
-echo "echo \"############## INSTALANDO O ZSH #######################\"
+echo "#\!/bin/bash
+
+echo \"############## INSTALANDO O ZSH #######################\"
 echo \"\" >> logPcConfg.txt
 date >> logPcConfg.txt
 echo \"############## INSTALANDO O ZSH #######################\" >> logPcConfg.txt
