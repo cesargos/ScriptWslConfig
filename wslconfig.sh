@@ -22,6 +22,12 @@ then
   exit 0
 fi
 
+if [ ! -d /home/$1 ]
+then
+  echo "${FMT_YELLOW}Nome de usuário inválido. Execute o comando passando \$USER no final. Ex: ${FMT_BOLD}sudo bash wslconfig.sh \$USER${FMT_RESET}"
+  echo "${FMT_YELLOW}O usuário informado não possui pasta em /home/$1${FMT_RESET}"
+fi
+
 sleep 1
 # cd /etc
 
